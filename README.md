@@ -84,3 +84,104 @@ Para materializar os modelos através do DBT, basta executar o seguinte comando:
 ``` bash
 dbt run
 ```
+
+--------------------------------------------------------------------------------
+
+# Modelo Star Schema
+
+## Tabela Fato: `fact_orders`
+
+Centraliza as métricas principais para análise:
+
+- `order_id` (PK)
+- `customer_id` (FK para `dim_customers`)
+- `seller_id` (FK para `dim_sellers`)
+- `product_id` (FK para `dim_products`)
+- `review_id` (FK para `dim_reviews`)
+- `payment_sequential`
+- `shipping_limit_date`
+- `price`
+- `freight_value`
+- `payment_type`
+- `payment_installments`
+- `payment_value`
+- `review_score`
+- `order_status`
+- `order_purchase_timestamp`
+- `order_approved_at`
+- `order_delivered_carrier_date`
+- `order_delivered_customer_date`
+- `order_estimated_delivery_date`
+
+---
+
+## Dimensão: `dim_customers`
+
+Descreve os clientes:
+
+- `customer_id` (PK)
+- `customer_unique_id`
+- `customer_zip_code_prefix`
+- `customer_city`
+- `customer_state`
+
+---
+
+## Dimensão: `dim_sellers`
+
+Descreve os vendedores:
+
+- `seller_id` (PK)
+- `seller_zip_code_prefix`
+- `seller_city`
+- `seller_state`
+
+---
+
+## Dimensão: `dim_products`
+
+Descreve os produtos:
+
+- `product_id` (PK)
+- `product_category_name` (FK para `dim_category_name`)
+- `product_name_length`
+- `product_description_length`
+- `product_photos_qty`
+- `product_weight_g`
+- `product_length_cm`
+- `product_height_cm`
+- `product_width_cm`
+
+---
+
+## Dimensão: `dim_category_name`
+
+Descreve as categorias de produtos:
+
+- `product_category_name` (PK)
+- `product_category_name_english`
+
+---
+
+## Dimensão: `dim_reviews`
+
+Descreve as avaliações:
+
+- `review_id` (PK)
+- `review_score`
+- `review_comment_title`
+- `review_comment_message`
+- `review_creation_date`
+- `review_answer_timestamp`
+
+---
+
+## Dimensão: `dim_geolocation`
+
+Descreve as localizações:
+
+- `geolocation_zip_code_prefix` (PK)
+- `geolocation_lat`
+- `geolocation_lng`
+- `geolocation_city`
+- `geolocation_state`
